@@ -9,7 +9,7 @@ namespace CourseStore.Endpoints.CourseConsole
     {
         static void Main(string[] args)
         {
-            QueryRepository.EagerLoadingSample01();
+            CommandRepository.CreateCourseWithDiscount("Microservice 100", "Dicroservice Desc 100", 2100, 1550, "Norooz");
 
             Console.WriteLine("Press any key...");
             Console.Read();
