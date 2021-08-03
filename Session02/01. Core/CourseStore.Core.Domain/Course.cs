@@ -16,6 +16,7 @@ namespace CourseStore.Core.Domain
         public List<Tag> Tags { get; set; }
         public List<CourseTeacher> CourseTeachers { get; set; }
         public List<Comment> Comments { get; set; }
+        public bool IsDeleted { get; set; }
     }
 
     //public class LazyCourse
