@@ -171,5 +171,13 @@ namespace CourseStore.Infra.Data.Sql
             course.IsDeleted = true;
             ctx.SaveChanges();
         }
+
+        public static void Delete(int courseId)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+            var course = ctx.Courses.SingleOrDefault(c => c.Id == courseId);
+            ctx.Courses.Remove(course);
+            ctx.SaveChanges();
+        }
     }
 }
