@@ -18,5 +18,11 @@ namespace CourseStore.Infra.Data.Sql
         {
             base.OnConfiguring(optionsBuilder);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Course>().HasQueryFilter(c => c.IsDeleted == false);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

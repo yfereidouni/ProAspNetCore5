@@ -163,5 +163,13 @@ namespace CourseStore.Infra.Data.Sql
             ctx.Tags.Update(tag);
             ctx.SaveChanges();
         }
+
+        public static void SoftDelete(int courseId)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+            var course = ctx.Courses.SingleOrDefault(c=>c.Id == courseId);
+            course.IsDeleted = true;
+            ctx.SaveChanges();
+        }
     }
 }
