@@ -106,5 +106,62 @@ namespace CourseStore.Infra.Data.Sql
             Console.WriteLine(ctx.ChangeTracker.DebugView.LongView);
 
         }
+
+        public static void Update(int courseId, string newTitle)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+
+            //1st : in web it is better not to use this one
+            var course = ctx.Courses.Find(courseId);
+
+            //2nd : 
+            var course1 = ctx.Courses.FirstOrDefault(c => c.Id == courseId);
+
+            //3rd : its the best wey for using in the web
+            var course2 = ctx.Courses.SingleOrDefault(c => c.Id == courseId);
+
+            course.Title = newTitle;
+            ctx.SaveChanges();
+        }
+
+        public static void ShowForUpdateDisconnected(int courseId)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+            var course = ctx.Courses.SingleOrDefault(c => c.Id == courseId);
+            Console.WriteLine($"{course.Id} {course.Title} {Environment.NewLine} {course.Description}");
+
+            UpdateDisconnected(courseId, "New Title");
+        }
+
+        private static void UpdateDisconnected(int courseId, string title)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+            var course = ctx.Courses.SingleOrDefault(c => c.Id == courseId);
+            course.Title = title;
+            ctx.SaveChanges();
+        }
+
+        public static void ShowForUpdateDisconnectedTag(int tagId, string title)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+            var tag = ctx.Tags.SingleOrDefault(c => c.Id == tagId);
+
+            Console.WriteLine($"{tag.Id}: {tag.Title}");
+            UpdateDisconnectedTag(tag.Id, "New Title");
+
+        }
+
+        //3rd : create object for updating
+        private static void UpdateDisconnectedTag(int id, string title)
+        {
+            var ctx = ContextFactory.GetSqlContext();
+            var tag = new Tag
+            {
+                Id = id,
+                Title = title
+            };
+            ctx.Tags.Update(tag);
+            ctx.SaveChanges();
+        }
     }
 }
